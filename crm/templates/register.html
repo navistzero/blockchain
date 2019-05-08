@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form action="" method="post" id="registerForm" novalidate="novalidate">
+                {% csrf_token %}
+                <div>
+                    {{ form_obj.username }}
+                    {{ form_obj.username.errors.0 }}
+                </div>
+                <div>
+                    {{ form_obj.password }}
+                    {{ form_obj.password.errors.0 }}
+                </div>
+                <div>
+                    {{ form_obj.re_password }}
+                    {{ form_obj.re_password.errors.0 }}
+                </div>
+                <div>
+                    {{ form_obj.name }}
+                    {{ form_obj.name.errors.0 }}
+                </div>
+                <div>
+                    {{ form_obj.mobile }}
+                    {{ form_obj.mobile.errors.0 }}
+                </div>
+{#                <div>#}
+{#                    {{ form_obj.department }}#}
+{#                    {{ form_obj.department.errors.0 }}#}
+{#                </div>#}
+                <button id="submit" type="submit">注 册</button>
+            </form>
+            <a href="{% url 'login' %}">
+                <button>已经有账号了</button>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

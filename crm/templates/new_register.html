@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>大气简洁后台登录模板</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    {% load staticfiles %}
+{#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'>#}
+    <script src="{% static 'js/jquery.js' %}"></script>
+{#    <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/login2.css' %}" type='text/css'>
+</head>
+<body style="zoom: 1;">
+<h1>后台登录<sup>crm系统</sup></h1>
+<img src="{% static 'img/1.jpg' %}" style="position:absolute; width:100%; height:115%; left:0; top:0; z-index:-1;"/>
+<div class="login" style="margin-top:50px;">
+    <div class="header">
+        <span class="switch_btn_focus" style="text-align: center;display:block;font-size:20px;line-height: 50px;">快速注册</span>
+    </div>
+    <div class="qlogin" id="qlogin" style="">
+        <div class="web_login">
+            <form name="form2" id="regUser" accept-charset="utf-8" action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="to" value="reg">
+                <input type="hidden" name="did" value="0">
+                <ul class="reg_form" id="reg-ul">
+                    <div id="userCue" class="cue">快速注册请注意格式</div>
+                    <li>
+                        <label for="user" class="input-tips2">用户名：</label>
+                        <div class="inputOuter2">
+                            {{ form_obj.username }}
+                            <span style="color:red">{{ form_obj.username.errors.0 }}</span>
+{#                            <input type="text" id="user" name="user" maxlength="16" class="inputstyle2">#}
+                        </div>
+                    </li>
+                    <li>
+                        <label for="passwd" class="input-tips2">密码：</label>
+                        <div class="inputOuter2">
+                            {{ form_obj.password }}
+                            <span style="color:red">{{ form_obj.password.errors.0 }}</span>
+{#                            <input type="password" id="passwd" name="passwd" maxlength="16" class="inputstyle2">#}
+                        </div>
+                    </li>
+                    <li>
+                        <label for="passwd2" class="input-tips2">确认密码：</label>
+                        <div class="inputOuter2">
+                            {{ form_obj.re_password }}
+                            <span style="color:red">{{ form_obj.re_password.errors.0 }}</span>
+{#                            <input type="password" id="passwd2" name="" maxlength="16" class="inputstyle2">#}
+                        </div>
+                    </li>
+                    <li>
+                        <label for="qq" class="input-tips2">真实姓名：</label>
+                        <div class="inputOuter2">
+                            {{ form_obj.name }}
+                            <span style="color:red">{{ form_obj.name.errors.0 }}</span>
+{#                            <input type="text" id="qq" name="qq" maxlength="10" class="inputstyle2">#}
+                        </div>
+                    </li>
+                    <li>
+                        <label for="qq" class="input-tips2">手机号码：</label>
+                        <div class="inputOuter2">
+                            {{ form_obj.mobile }}
+                            <span style="color:red">{{ form_obj.mobile.errors.0 }}</span>
+{#                            <input type="text" id="qq" name="qq" maxlength="10" class="inputstyle2">#}
+                        </div>
+                    </li>
+{#                    <span style="color:red">{{form_obj.errors}}</span>#}
+                    <li>
+                        <div style="padding-left:75px;margin-top:20px;">
+                            <button style="width:150px;" class="button_blue">注 册</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="padding-left:75px;margin-top:0px;">
+                            <a href="{% url 'login' %}">
+                                <button type="button" style="width:150px;" class="button_blue">已经有账号了</button>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

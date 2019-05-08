@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load my_tags %}
+    <div class="luffy-container">
+        <div class="btn-group" style="margin: 5px 0">
+{#            {% if request|has_permission:'add' %}#}
+            <a class="btn btn-success" href="{% url 'rbac:add_role' %}">
+                <i class="fa fa-plus-square" aria-hidden="true"></i> 添加角色
+            </a>
+{#            {% endif %}#}
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>角色名称</th>
+                <th>选项</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in data_list %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>
+                        <a style="color: #333333;" href="{% url 'rbac:edit_role' row.id %}">
+                            <i class="fa fa-edit" aria-hidden="true"></i></a>
+                        |
+                        <a style="color: #d9534f;" href="{% url 'rbac:del_role' row.id %}"><i class="fa fa-trash-o"></i></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

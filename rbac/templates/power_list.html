@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+
+{% block my_css %}
+    <style>
+
+    .root {
+    background-color: #fdf8c0;
+    }
+
+    .aaaaaa {
+    background-color: #fdeac0;
+    border-left: 3px solid #fdc00f;
+    }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    {% load my_tags %}
+    <div class="luffy-container">
+        <div class="row">
+            <div class="col-md-3">
+                <table class="table table-bordered table-hover">
+                    <caption style="background-color: #d6d3d3" class="">
+                        &emsp;<i class="fa fa-id-card-o" aria-hidden="true"></i>
+                        <span style="color: black">菜单管理</span>
+                        <a class="pull-right btn btn-success btn-xs" href="{% url 'rbac:add_menu' %}"
+                           style="margin-right: 8px;">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> 新建
+                        </a>&emsp;
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>图标</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in menu_list %}
+                        <tr class="{% if mid == row.id|safe %}aaaaaa{% endif %}">
+                            <td><a href="?mid={{ row.id }}">{{ row.title }}</a></td>
+                            <td><i class="fa {{ row.icon }}" aria-hidden="true"></i></td>
+                            <td>
+                                <a style="color: #333333;" href="{% url 'rbac:edit_menu' row.id %}">
+                                    <i class="fa fa-edit" aria-hidden="true"></i></a>
+                                |
+                                <a style="color: #d9534f;" href="{% url 'rbac:del_menu' row.id %}"><i
+                                        class="fa fa-trash-o"></i></a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-9">
+                <table class="table table-bordered table-hover">
+                    <caption style="background-color: #d6d3d3" class="">
+                        &emsp;<i class="fa fa-puzzle-piece" aria-hidden="true"></i>
+                        <span style="color: black">权限管理</span>
+                        <a class="pull-right btn btn-success btn-xs" href="{% url 'rbac:add_power' %}" style="margin-right: 8px;">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> 新建
+                        </a>
+                        <a class="pull-right btn btn-success btn-xs" href="{% url 'rbac:multi_power' %}" style="margin-right: 8px;">
+                            <i class="fa fa-reply-all" aria-hidden="true"></i> 批量操作
+                        </a>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>URL</th>
+                        <th>URL别名</th>
+                        <th>菜单</th>
+                        <th>所属菜单</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row2 in power_list %}
+                        <tr class="root">
+                            <td class="my_name" id="{{ row2.id }}">
+                                <i class="fa fa-caret-down"></i>{{ row2.title }}</td>
+                            <td>{{ row2.url }}</td>
+                            <td>{{ row2.url_name }}</td>
+                            <td> <p style="color: green">YES</p></td>
+                            <td>{{ row2.is_menu__title }}</td>
+                            <td>
+                                <a style="color: #333333;" href="{% url 'rbac:edit_power' row2.id %}">
+                                    <i class="fa fa-edit" aria-hidden="true"></i></a>
+                                |
+                                <a style="color: #d9534f;" href="{% url 'rbac:del_power' row2.id %}"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        {% for row3 in row2.children %}
+                        <tr pid="{{ row3.parent_id }}">
+                            <td>{{ row3.title }}</td>
+                            <td>{{ row3.url }}</td>
+                            <td>{{ row3.url_name }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a style="color: #333333;" href="{% url 'rbac:edit_power' row3.id %}">
+                                    <i class="fa fa-edit" aria-hidden="true"></i></a>
+                                |
+                                <a style="color: #d9534f;" href="{% url 'rbac:del_power' row3.id %}"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $('.my_name').click(function () {
+        pid = $(this).attr('id');
+        caret = $(this).find('i');
+        if (caret.hasClass('fa-caret-down')) {
+            caret.removeClass('fa-caret-down').addClass('fa-caret-right');
+        } else {
+            caret.removeClass('fa-caret-right').addClass('fa-caret-down');
+        }
+        tr = $(this).parent().nextAll("[pid=" + pid + "]");
+        tr.toggleClass('hide');
+    })
+</script>
+{% endblock %}
